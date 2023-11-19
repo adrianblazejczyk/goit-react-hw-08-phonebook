@@ -8,7 +8,7 @@ export const Form = styled.form`
   border-radius: 15px;
 `;
 
-export const NameInput = styled.h2`
+export const NameInput = styled.label`
   margin: 5px;
   padding: 0px;
   font-size: 20px;

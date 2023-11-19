@@ -14,5 +14,5 @@ export const SectionWrapper = styled.section`
   border: 1px solid black;
   border-radius: 15px;
   margin: 10px;
-  width: 300px;
+  width: 800px;
 `;
