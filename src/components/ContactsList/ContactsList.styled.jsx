@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const SearchTitle = styled.p``;
+export const SearchInput = styled.input``;
 export const Contacts = styled.ul``;
 export const Contact = styled.li``;
 export const ContactName = styled.p`
@@ -19,3 +21,4 @@ export const DeleteButton = styled.button`
   height: 60px;
   width: 60px;
 `;
+
