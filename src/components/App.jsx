@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { Section, ContactForm, ContactsList } from 'components';
+import { Section, ContactForm, ContactsList, Filter } from 'components';
 
 export class App extends Component {
   state = {
@@ -13,7 +13,15 @@ export class App extends Component {
     filter: '',
   };
   handleAddContact = data => {
-    // const { contacts } = this.state;
+    const { contacts } = this.state;
+    if (
+      contacts.find(
+        ({ name }) => name.toLowerCase() === data.name.toLowerCase()
+      )
+    ) {
+      alert(`${data.name} is already in contacts :)`);
+      return;
+    }
     const id = nanoid();
 
     this.setState(prevState => ({
@@ -24,11 +32,14 @@ export class App extends Component {
   handleDelete = evt => {
     const { contacts } = this.state;
     const id = evt.target.id;
-    const indexToDelete = contacts.findIndex(
-      contact => contact.id === id
-    );
+    const indexToDelete = contacts.findIndex(contact => contact.id === id);
     contacts.splice(indexToDelete, 1);
     this.setState({ contacts: contacts });
+  };
+
+  handleChangeState = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -49,6 +60,7 @@ export class App extends Component {
           <ContactForm onSubmitHandle={this.handleAddContact}></ContactForm>
         </Section>
         <Section title="Contacts">
+          <Filter onChangeHandle={this.handleChangeState}></Filter>
           <ContactsList
             contacts={contacts}
             filter={filter}
