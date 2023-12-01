@@ -1,17 +1,21 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Section, ContactForm, ContactsList, Filter } from 'components';
+import { setItemLocalData, getItemLocalData } from '../utils/localStorage';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const data = getItemLocalData('contactList');
+    this.setState({
+      contacts: [...data],
+    });
+  }
+
   handleAddContact = data => {
     const { contacts } = this.state;
     if (
@@ -24,17 +28,24 @@ export class App extends Component {
     }
     const id = nanoid();
 
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, { id, ...data }],
-    }));
+    this.setState(prevState => {
+      const updatedContacts = [...prevState.contacts, { id, ...data }];
+      setItemLocalData('contactList', [...updatedContacts]);
+      return { contacts: updatedContacts };
+    });
   };
 
   handleDelete = evt => {
     const { contacts } = this.state;
+
     const id = evt.target.id;
     const indexToDelete = contacts.findIndex(contact => contact.id === id);
     contacts.splice(indexToDelete, 1);
-    this.setState({ contacts: contacts });
+    setItemLocalData('contactList', [...contacts]);
+    console.log(contacts);
+    this.setState(() => {
+      return { contacts: contacts };
+    });
   };
 
   handleChangeState = event => {
