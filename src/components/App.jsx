@@ -11,9 +11,11 @@ export class App extends Component {
 
   componentDidMount() {
     const data = getItemLocalData('contactList');
-    this.setState({
-      contacts: [...data],
-    });
+    if (data) {
+      this.setState({
+        contacts: [...data],
+      });
+    }
   }
 
   handleAddContact = data => {
