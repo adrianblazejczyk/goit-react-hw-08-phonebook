@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import {
   Contact,
   ContactName,
@@ -8,21 +7,17 @@ import {
 
 import PropTypes from 'prop-types';
 
-export class ContactListItem extends Component {
-  render() {
-    const { name, number, id, onDeleteHandle } = this.props;
-
-    return (
-      <Contact key={id}>
-        <ContactName>{name}</ContactName>
-        <ContactNumber>{number}</ContactNumber>
-        <DeleteButton id={id} onClick={onDeleteHandle}>
-          Delete
-        </DeleteButton>
-      </Contact>
-    );
-  }
-}
+export const ContactListItem = ({ name, number, id, onDeleteHandle }) => {
+  return (
+    <Contact key={id}>
+      <ContactName>{name}</ContactName>
+      <ContactNumber>{number}</ContactNumber>
+      <DeleteButton id={id} onClick={onDeleteHandle}>
+        Delete
+      </DeleteButton>
+    </Contact>
+  );
+};
 ContactListItem.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,

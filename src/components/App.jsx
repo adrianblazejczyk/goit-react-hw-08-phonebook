@@ -1,86 +1,82 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Section, ContactForm, ContactsList, Filter } from 'components';
 import { setItemLocalData, getItemLocalData } from '../utils/localStorage';
+import PropTypes from 'prop-types';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+export const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     const data = getItemLocalData('contactList');
     if (data) {
-      this.setState({
-        contacts: [...data],
-      });
+      setContacts(data);
     }
-  }
+  }, []);
 
-  handleAddContact = data => {
-    const { contacts } = this.state;
+  const handleAddContact = (adName, number) => {
     if (
-      contacts.find(
-        ({ name }) => name.toLowerCase() === data.name.toLowerCase()
-      )
+      contacts.find(({ name }) => name.toLowerCase() === adName.toLowerCase())
     ) {
-      alert(`${data.name} is already in contacts :)`);
+      alert(`${adName} is already in contacts :)`);
       return;
     }
     const id = nanoid();
+    const updatedContacts = [...contacts, { id, name: adName, number }];
 
-    this.setState(prevState => {
-      const updatedContacts = [...prevState.contacts, { id, ...data }];
-      setItemLocalData('contactList', [...updatedContacts]);
-      return { contacts: updatedContacts };
-    });
+    setContacts(updatedContacts);
+    setItemLocalData('contactList', updatedContacts);
   };
 
-  handleDelete = evt => {
-    const { contacts } = this.state;
-
+  const handleDelete = evt => {
     const id = evt.target.id;
-    const indexToDelete = contacts.findIndex(contact => contact.id === id);
-    contacts.splice(indexToDelete, 1);
-    setItemLocalData('contactList', [...contacts]);
-    console.log(contacts);
-    this.setState(() => {
-      return { contacts: contacts };
-    });
+    const updatedContacts = contacts.filter(contact => contact.id !== id);
+    setContacts(updatedContacts);
+    setItemLocalData('contactList', updatedContacts);
   };
 
-  handleChangeState = event => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const handleChangeState = event => {
+    const { value } = event.target;
+    setFilter(value);
   };
 
-  render() {
-    const { contacts, filter } = this.state;
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
-        <Section title="Phonebook">
-          <ContactForm onSubmitHandle={this.handleAddContact}></ContactForm>
-        </Section>
-        <Section title="Contacts">
-          <Filter onChangeHandle={this.handleChangeState}></Filter>
-          <ContactsList
-            contacts={contacts}
-            filter={filter}
-            onDeleteHandle={this.handleDelete}
-          ></ContactsList>
-        </Section>
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+      }}
+    >
+      <Section key="phonebook" title="Phonebook">
+        <ContactForm onSubmitHandle={handleAddContact}></ContactForm>
+      </Section>
+      <Section key="contacts" title="Contacts">
+        <Filter onChangeHandle={handleChangeState}></Filter>
+        <ContactsList
+          contacts={contacts}
+          filter={filter}
+          onDeleteHandle={handleDelete}
+        ></ContactsList>
+      </Section>
+    </div>
+  );
+};
+App.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
+  filter: PropTypes.string,
+  handleAddContact: PropTypes.func,
+  handleDelete: PropTypes.func,
+  handleChangeState: PropTypes.func,
+};
