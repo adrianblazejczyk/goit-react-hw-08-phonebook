@@ -1,12 +1,18 @@
-export const setItemLocalData = (key, value) => {
-  localStorage.setItem(key, JSON.stringify(value));
+export const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem('reduxState');
+    return serializedState ? JSON.parse(serializedState) : undefined;
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
 };
 
-export const getItemLocalData = key => {
-  const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : null;
-};
-
-export const removeItemLocalData = key => {
-  localStorage.removeItem(key);
+export const saveState = state => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('reduxState', serializedState);
+  } catch (err) {
+    console.log(err);
+  }
 };

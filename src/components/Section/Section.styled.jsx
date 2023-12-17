@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Titel = styled.h2`
+export const Title = styled.h2`
   color: black;
   text-align: center;
   margin-top: 0px;
