@@ -1,6 +1,21 @@
-import { Section, ContactForm, ContactsList, Filter } from 'components';
+import { Section, ContactForm, ContactsList, Filter, Loader } from 'components';
+
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from '../redux/operations';
+
+import { getError, getIsLoading } from '.././redux/selectors';
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <div
       style={{
@@ -16,6 +31,7 @@ export const App = () => {
       <Section key="phonebook" title="Phonebook">
         <ContactForm />
       </Section>
+      {isLoading && !error && <Loader />}
       <Section key="contacts" title="Contacts">
         <Filter />
         <ContactsList />

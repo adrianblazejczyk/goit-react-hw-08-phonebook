@@ -4,7 +4,7 @@ import { Form, NameInput, InputData, ButtonForm } from './ContactForm.styled';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../redux/selectors';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/operations';
 
 export const ContactForm = () => {
   const contacts = useSelector(getContacts);
@@ -30,8 +30,15 @@ export const ContactForm = () => {
       alert(`${name} is already in contacts :)`);
       return;
     }
-    const id = nanoid();
-    dispatch(addContact(id, name, number));
+
+    const newContact = {
+      createdAt: '2023-12-31T04:22:20.031Z',
+      name: name,
+      phone: number,
+    };
+
+    //addContact({ id, name, number });
+    dispatch(addContact(newContact));
     reset();
   };
 
