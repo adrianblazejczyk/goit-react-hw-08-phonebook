@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-export const WraperFilter = styled.div`
+export const WrapperFilter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

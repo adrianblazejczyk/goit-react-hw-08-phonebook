@@ -3,11 +3,11 @@ import { nanoid } from 'nanoid';
 import { Form, NameInput, InputData, ButtonForm } from './ContactForm.styled';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from '../../redux/selectors';
+import { selectContacts } from '../../redux/selectors';
 import { addContact } from '../../redux/operations';
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -37,7 +37,6 @@ export const ContactForm = () => {
       phone: number,
     };
 
-    //addContact({ id, name, number });
     dispatch(addContact(newContact));
     reset();
   };

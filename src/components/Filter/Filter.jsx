@@ -1,18 +1,18 @@
-import { WraperFilter, SearchTitle, SearchInput } from './Filter.styled';
+import { WrapperFilter, SearchTitle, SearchInput } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from '../../redux/selectors';
+import { selectFilter } from '../../redux/selectors';
 import { setFilter } from '../../redux/filtersSlice';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
 
   const handleChange = event => {
     dispatch(setFilter(event.target.value));
   };
 
   return (
-    <WraperFilter>
+    <WrapperFilter>
       <SearchTitle>Find contacts by name</SearchTitle>
       <SearchInput
         type="text"
@@ -21,6 +21,6 @@ export const Filter = () => {
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         onChange={handleChange}
       ></SearchInput>
-    </WraperFilter>
+    </WrapperFilter>
   );
 };

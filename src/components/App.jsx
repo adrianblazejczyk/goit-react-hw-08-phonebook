@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from '../redux/operations';
 
-import { getError, getIsLoading } from '.././redux/selectors';
+import { selectError, selectLoading } from '.././redux/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -19,7 +19,7 @@ export const App = () => {
   return (
     <div
       style={{
-        height: '100vh',
+        paddingTop: '100px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
