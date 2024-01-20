@@ -1,29 +1,56 @@
-import {
-  Contact,
-  ContactName,
-  ContactNumber,
-  DeleteButton,
-} from './ContactsListItem.styled';
+import * as React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/contacts/contactsOperations';
+
+
+import { selectContactEdit } from '../../redux/contacts/contactsSelectors';
+
+import TableCell from '@mui/material/TableCell';
+
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 
 export const ContactListItem = ({ name, phone, id }) => {
   const dispatch = useDispatch();
+  const contactEdit = useSelector(selectContactEdit);
+
+  console.log(id);
+
   const handleDelete = () => {
     dispatch(deleteContact(id));
   };
 
   return (
-    <Contact key={id}>
-      <ContactName>{name}</ContactName>
-      <ContactNumber>{phone}</ContactNumber>
-      <DeleteButton id={id} onClick={handleDelete}>
-        Delete
-      </DeleteButton>
-    </Contact>
+    <>
+      <TableRow
+        key={id}
+        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      >
+        <TableCell align="center">{name}</TableCell>
+        <TableCell align="center">{phone}</TableCell>
+        <TableCell align="center">
+          <Button
+            id={id}
+            onClick={handleDelete}
+            variant="contained"
+            sx={{ m: 1 }}
+          >
+            Delete
+          </Button>
+          <Button
+            id={id}
+            // onClick={handleEditOpen}
+            variant="contained"
+            sx={{ m: 1 }}
+          >
+            Edit
+          </Button>
+        </TableCell>
+      </TableRow>
+    </>
   );
 };
 
