@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 
 import { useDispatch } from 'react-redux';
 
-import { Section, ContactForm, Filter, ContactsList, Menu } from 'components';
+import { ContactForm, Filter, ContactsList, Menu } from 'components';
 import { useEffect } from 'react';
 import Container from '@mui/material/Container';
 
@@ -21,8 +21,8 @@ export function Contacts() {
   const defaultTheme = createTheme();
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectLoadingContacts);
-  const error = useSelector(selectErrorContacts);
+  // const isLoading = useSelector(selectLoadingContacts);
+  // const error = useSelector(selectErrorContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
