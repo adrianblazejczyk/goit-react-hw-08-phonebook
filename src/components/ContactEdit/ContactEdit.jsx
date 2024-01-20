@@ -26,8 +26,6 @@ const style = {
 };
 
 export const ContactEdit = ({ id, phone }) => {
-  console.log(id);
-
   const dispatch = useDispatch();
 
   const [name, setName] = useState('test');

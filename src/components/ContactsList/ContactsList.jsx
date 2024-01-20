@@ -1,4 +1,3 @@
-import { Contacts, Info } from './ContactsList.styled';
 import { ContactListItem } from '../ContactsListItem';
 import { useSelector } from 'react-redux';
 import { selectFilter } from '../../redux/filters/filtersSelectors';
@@ -30,10 +29,7 @@ export const ContactsList = () => {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
 
-  const handleEditOpen = () => {
-    dispatch(setContactEdit(true));
-  };
-  const handleEditClose = () => {
+  const handleEditClose = eve => {
     dispatch(setContactEdit(false));
   };
 
@@ -93,7 +89,9 @@ export const ContactsList = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ContactEdit />
+        <div>
+          <ContactEdit />
+        </div>
       </Modal>
     </Container>
   );
