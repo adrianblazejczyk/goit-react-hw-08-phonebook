@@ -30,7 +30,14 @@ export const ContactsList = () => {
   const filter = useSelector(selectFilter);
 
   const handleEditClose = eve => {
-    dispatch(setContactEdit(false));
+    dispatch(
+      setContactEdit({
+        modalOpen: false,
+        id: null,
+        name: '',
+        number: '',
+      })
+    );
   };
 
   return (
@@ -84,7 +91,7 @@ export const ContactsList = () => {
         )}
       </Box>
       <Modal
-        open={contactEdit}
+        open={contactEdit.modalOpen}
         onClose={handleEditClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

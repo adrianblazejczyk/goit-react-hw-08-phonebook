@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { signOut } from '../../redux/auth/authOperations';
 import { selectUser } from '../../redux/auth/authSelector';
-
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';

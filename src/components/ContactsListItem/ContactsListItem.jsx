@@ -1,23 +1,22 @@
 import * as React from 'react';
-
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/contactsOperations';
-
 import TableCell from '@mui/material/TableCell';
-
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-
 import { setContactEdit } from '../../redux/contacts/contactsSlice';
 
 export const ContactListItem = ({ name, phone, id }) => {
   const dispatch = useDispatch();
 
   const handleEditOpen = eve => {
-    console.log(eve.target.id);
-    dispatch(setContactEdit(true));
+    dispatch(
+      setContactEdit({
+        modalOpen: true,
+        id: eve.target.id,
+      })
+    );
   };
   const handleDelete = () => {
     dispatch(deleteContact(id));
@@ -43,6 +42,8 @@ export const ContactListItem = ({ name, phone, id }) => {
           <Button
             id={id}
             onClick={handleEditOpen}
+            name={name}
+            phone={phone}
             variant="contained"
             sx={{ m: 1 }}
           >

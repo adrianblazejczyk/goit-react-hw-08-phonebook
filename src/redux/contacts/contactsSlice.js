@@ -26,7 +26,10 @@ export const contactsSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
-    ContactEdit: false,
+    ContactEdit: {
+      modalOpen: false,
+      id: null,
+    },
   },
   reducers: {
     setContactEdit(state, action) {

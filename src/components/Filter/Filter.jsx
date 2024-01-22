@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from '../../redux/filters/filtersSelectors';
 import { setFilter } from '../../redux/filters/filtersSlice';

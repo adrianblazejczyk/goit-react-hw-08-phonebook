@@ -14,7 +14,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.3",
     "nanoid": "^4.0.2",
-    "notiflix": "^3.2.6",
+    "notiflix": "^3.2.7",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",

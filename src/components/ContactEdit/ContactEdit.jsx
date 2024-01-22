@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { updateContact } from '../../redux/contacts/contactsOperations';
-
 import { setContactEdit } from '../../redux/contacts/contactsSlice';
-
+import Notiflix from 'notiflix';
+import {
+  selectContactEdit,
+  selectContacts,
+} from '../../redux/contacts/contactsSelectors';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -25,11 +26,16 @@ const style = {
   p: 4,
 };
 
-export const ContactEdit = ({ id, phone }) => {
+export const ContactEdit = () => {
   const dispatch = useDispatch();
+  const oldContactData = useSelector(selectContactEdit);
+  const id = oldContactData.id;
 
-  const [name, setName] = useState('test');
-  const [number, setNumber] = useState('000000');
+  const dataContacts = useSelector(selectContacts);
+  const dataContact = dataContacts.find(contact => contact.id === id);
+
+  const [name, setName] = useState(dataContact.name);
+  const [number, setNumber] = useState(dataContact.number);
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -40,7 +46,12 @@ export const ContactEdit = ({ id, phone }) => {
   };
 
   const handleCancel = () => {
-    dispatch(setContactEdit(false));
+    dispatch(
+      setContactEdit({
+        modalOpen: false,
+        id: null,
+      })
+    );
   };
 
   const handleSave = evt => {
@@ -51,8 +62,23 @@ export const ContactEdit = ({ id, phone }) => {
       number: number,
     };
 
+    if (
+      dataContacts.some(
+        contact =>
+          contact.name.toLowerCase() === name.toLowerCase() && contact.id !== id
+      )
+    ) {
+      Notiflix.Notify.info(`${name} is already in contacts :)`);
+      return;
+    }
+
     dispatch(updateContact(newDataContact));
-    dispatch(setContactEdit(false));
+    dispatch(
+      setContactEdit({
+        modalOpen: false,
+        id: null,
+      })
+    );
   };
 
   return (

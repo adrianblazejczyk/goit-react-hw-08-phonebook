@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts } from '../../redux/contacts/contactsSelectors';
 import { addContact } from '../../redux/contacts/contactsOperations';
-
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,8 +14,7 @@ import Box from '@mui/material/Box';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { Link as RouterLink } from 'react-router-dom';
+import Notiflix from 'notiflix';
 
 export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
@@ -40,7 +37,8 @@ export const ContactForm = () => {
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      alert(`${name} is already in contacts :)`);
+      Notiflix.Notify.info(`${name} is already in contacts :)`);
+
       return;
     }
 

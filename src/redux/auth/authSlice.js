@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signUp, signIn, signOut, checkLoginStatus } from './authOperations';
+import Notiflix from 'notiflix';
 
 const isPendingAction = action => {
   return action.type.endsWith('/pending');
@@ -16,6 +17,9 @@ const handlePending = state => {
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
+  state.isLoggedIn = false;
+  Notiflix.Notify.info('Zaloguj się poprawnymi danymi');
+  state.token = null;
 };
 
 export const authSlice = createSlice({
@@ -55,7 +59,7 @@ export const authSlice = createSlice({
       .addCase(checkLoginStatus.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items.push(action.payload);
+        state.isLoggedIn = true;
       })
 
       .addMatcher(isPendingAction, handlePending)

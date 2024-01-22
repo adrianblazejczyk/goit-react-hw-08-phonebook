@@ -76,6 +76,7 @@ export const SignUpForm = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -86,6 +87,8 @@ export const SignUpForm = () => {
                   label="Password"
                   type="password"
                   id="password"
+                  pattern=".{7,}"
+                  title="The password must have at least 7 characters"
                   autoComplete="new-password"
                 />
               </Grid>
