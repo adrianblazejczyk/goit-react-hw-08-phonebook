@@ -59,6 +59,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.isLoggedIn = false;
+        state.token = null;
       })
       .addCase(checkLoginStatus.fulfilled, (state, action) => {
         state.isLoading = false;
