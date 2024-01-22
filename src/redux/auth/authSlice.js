@@ -17,10 +17,11 @@ const handlePending = state => {
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
-  state.isLoggedIn = false;
+
   if (action.payload !== 'Unable to fetch user') {
     Notiflix.Notify.info('Zaloguj się poprawnymi danymi');
   } else {
+    state.isLoggedIn = false;
     state.token = null;
   }
 };
